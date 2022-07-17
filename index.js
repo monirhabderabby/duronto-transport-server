@@ -30,10 +30,25 @@ async function run() {
             .collection("programme");
 
         app.get("/allProgramme", async (req, res) => {
-            const filter = {};
-            const result = await programmeCollection.find(filter).toArray();
-            res.send(result);
+            const district = req.query.district;
+            console.log(district);
+            if (district == "সব") {
+                const filter = {};
+                const result = await programmeCollection.find(filter).toArray();
+                res.send(result);
+                console.log(true);
+            } else {
+                const filter = { district: district };
+                const result = await programmeCollection.find(filter).toArray();
+                res.send(result);
+            }
         });
+
+        // app.get("/allProgrammer", async (req, res) => {
+        //     const district = req.query.district;
+        //     console.log(district);
+        //     res.send("dfdj");
+        // });
 
         app.post("/newProgramme", async (req, res) => {
             const programme = req.body;
